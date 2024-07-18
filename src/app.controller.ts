@@ -2,7 +2,9 @@ import { Controller, Get, Inject, LoggerService } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ConfigService } from '@nestjs/config';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('app模块')
 @Controller()
 export class AppController {
   constructor(
@@ -13,6 +15,7 @@ export class AppController {
   ) {}
 
   @Get()
+  @ApiOperation({ summary: 'get请求根路由' })
   getHello(): string {
     this.logger.error('app controller error  occur');
     return this.appService.getHello();
