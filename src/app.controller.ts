@@ -17,7 +17,6 @@ export class AppController {
   @Get()
   @ApiOperation({ summary: 'get请求根路由' })
   getHello(): string {
-    this.logger.error('app controller error  occur');
     return this.appService.getHello();
   }
 }
