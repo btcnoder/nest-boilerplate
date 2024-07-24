@@ -63,10 +63,10 @@ export class MqService implements OnModuleInit {
    */
   async pubMQMsgTest(message: any): Promise<void> {
     await this.amqp.publish(this.exc_test, this.routingKey_test, message);
-    this.logger.log(
-      `amqp publish message -> exchange : ${this.exc_test}, routingKey : ${this.routingKey_test},message : ${JSON.stringify(
-        message,
-      )}`,
-    );
+    // this.logger.log(
+    //   `amqp publish message -> exchange : ${this.exc_test}, routingKey : ${this.routingKey_test},message : ${JSON.stringify(
+    //     message,
+    //   )}`,
+    // );
   }
 }

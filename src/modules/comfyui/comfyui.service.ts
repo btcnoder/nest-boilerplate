@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import * as FormData from 'form-data';
 import * as fs from 'fs';
 import { promises as fsPromises } from 'fs';
+import { MqService } from '@/modules/mq/mq.sercive';
 
 @Injectable()
 export class ComfyuiService {
@@ -13,6 +14,7 @@ export class ComfyuiService {
     private readonly httpService: HttpService,
     @Inject(WINSTON_MODULE_NEST_PROVIDER)
     private readonly logger: LoggerService,
+    private readonly mqService: MqService,
   ) {}
 
   getInfo(): Observable<AxiosResponse<any>> {
@@ -42,6 +44,17 @@ export class ComfyuiService {
       '/Users/justnode/codeRepos/nodejs/nest-boilerplate/src/uploads/1.json';
     const prompt = await fsPromises.readFile(filePath, 'utf-8');
     const jsonObj = { prompt: JSON.parse(prompt), client_id: client_id };
+    console.log(jsonObj);
     return this.httpService.post(url, jsonObj);
+  }
+
+  async MQPrompt() {
+    const client_id = '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bdf';
+    const filePath =
+      '/Users/justnode/codeRepos/nodejs/nest-boilerplate/src/uploads/1.json';
+    const prompt = await fsPromises.readFile(filePath, 'utf-8');
+    const jsonObj = { prompt: JSON.parse(prompt), client_id: client_id };
+
+    this.mqService.pubMQMsgTest(jsonObj);
   }
 }

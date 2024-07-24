@@ -2,7 +2,6 @@ import { Controller, Get, Inject, LoggerService } from '@nestjs/common';
 import { ComfyuiService } from './comfyui.service';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { map } from 'rxjs/operators';
-import { MqService } from '@/modules/mq/mq.sercive';
 
 @Controller('comfyui')
 export class ComfyuiController {
@@ -10,7 +9,6 @@ export class ComfyuiController {
     private readonly comfyuiService: ComfyuiService,
     @Inject(WINSTON_MODULE_NEST_PROVIDER)
     private readonly logger: LoggerService,
-    private readonly mqService: MqService,
   ) {}
 
   @Get()
@@ -34,9 +32,8 @@ export class ComfyuiController {
     );
   }
   @Get('sendmsg')
-  sendMesssageTest() {
-    this.mqService.pubMQMsgTest('hahahaha test');
-
+  async sendMesssageTest() {
+    await this.comfyuiService.MQPrompt();
     return 'message send ';
   }
 }
